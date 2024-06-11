@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block title %}homepage{% endblock %}
+
+{% block body %}
+    {% for post in posts %}
+
+    <div class="card" style="width: 25rem;">
+        <div class="card-header">
+          {{post.date|date:"F j, Y, g:i:a"}}
+        </div>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item">{{post.text}}</li>
+          <!-- TODO add in a detail url -->
+          <li class="list-group-item">Read More</li>
+          <!-- TODO insert an avatar, bio, photo, thumbnail, a name -->
+          <li class="list-group-item">avatar?</li>
+        </ul>
+    </div>
+    {% endfor %}
+
+
+{% endblock %}
