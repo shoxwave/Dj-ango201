@@ -1,0 +1,28 @@
+{% load thumbnail %}
+
+<div class="card " style="width: 25rem;">
+    <h5 class="card-header items-center text-bg-primary">
+        <!-- TODO add url below -->
+        <a class="flex items-center" style="text-align: right" href="#">
+            {{post.author.username}}<span>&nbsp;</span>
+            {% thumbnail post.author.profile.image "30x30" crop="center" as im %}
+                <img class="rounded me-2" src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}" alt="profile image for {{post.author.username}}">
+            {% endthumbnail %}
+        </a> 
+    </h5>
+    <div class="card-body">
+        <h5 class="card-title">
+            {{ post.text }}
+        </h5>
+        <p class="card-text">
+            {% if show_detail_link %}
+                <a style="color: blue" href="{% url 'feed:detail' post.id %}">Read More</a>
+            {% else %}
+                <span>&nbsp;</span> 
+            {% endif %}
+        </p>
+        <p class="card-text">
+            {{post.date|date:"F j, Y, g:i:a"}}
+        </p>
+    </div>
+</div>
