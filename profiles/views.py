@@ -1,11 +1,12 @@
 from typing import Any
 from django.contrib.auth.models import User
-from django.views.generic import DetailView, View
+from django.views.generic import DetailView, View, UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import JsonResponse, HttpResponseBadRequest
 
 from feed.models import Post
 from followers.models import Follower
+from profiles.models import Profile
 
 
 class ProfileDetailView(DetailView):
@@ -66,3 +67,21 @@ class FollowView(LoginRequiredMixin, View):
             'success': True,
             'wording': "Unfollow" if data['action'] == "follow" else "Follow"
         })
+
+class ProfileUpdateView(LoginRequiredMixin, UpdateView):
+    template_name = "edit_profile.html"
+    model = Profile
+    # pk_url_kwarg = 'pk'
+
+    def dispatch(self, request, *args, **kwargs):
+        self.request = request
+        return super().dispatch(request, *args, **kwargs)
+
+    def form_valid(self, form):
+        # Create a new Post
+        new_object = Post.objects.create(
+            text=form.cleaned_data['text'],
+            image=form.cleaned_data['image']
+        )
+        # messages.add_message(self.request, messages.SUCCESS, 'Your post was successful')
+        # return super().form_valid(form)
