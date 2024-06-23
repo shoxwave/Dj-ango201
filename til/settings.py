@@ -47,7 +47,8 @@ INSTALLED_APPS = [
 
     #local
     'feed',
-    'profiles',
+    'profiles', 
+    'followers',
 
     #third party
     'allauth',
