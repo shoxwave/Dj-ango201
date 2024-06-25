@@ -28,5 +28,4 @@ urlpatterns = [
     path("", include(feed_urls, namespace = "feed")),
     path("profile/", include(profiles_urls, namespace = "profiles")),
     path("accounts/", include("allauth.urls")),
-
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
