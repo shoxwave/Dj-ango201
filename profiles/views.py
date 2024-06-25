@@ -7,6 +7,7 @@ from django.http import JsonResponse, HttpResponseBadRequest
 from feed.models import Post
 from followers.models import Follower
 from profiles.models import Profile
+# from profiles.models import Edit
 
 
 class ProfileDetailView(DetailView):
@@ -68,20 +69,23 @@ class FollowView(LoginRequiredMixin, View):
             'wording': "Unfollow" if data['action'] == "follow" else "Follow"
         })
 
-class ProfileUpdateView(LoginRequiredMixin, UpdateView):
-    template_name = "edit_profile.html"
-    model = Profile
-    # pk_url_kwarg = 'pk'
+class ProfileUpdateView(UpdateView):
+    http_method_names = ["get"]
+    template_name = "profiles/edit_profile.html"
+    # model = User
+    # context_object_name = "user"
+    # slug_field = "username"
+    # slug_url_kwarg = "username"
 
-    def dispatch(self, request, *args, **kwargs):
-        self.request = request
-        return super().dispatch(request, *args, **kwargs)
+    # def dispatch(self, request, *args, **kwargs):
+    #     self.request = request
+    #     return super().dispatch(request, *args, **kwargs)
 
-    def form_valid(self, form):
-        # Create a new Post
-        new_object = Post.objects.create(
-            text=form.cleaned_data['text'],
-            image=form.cleaned_data['image']
-        )
-        # messages.add_message(self.request, messages.SUCCESS, 'Your post was successful')
-        # return super().form_valid(form)
+    # def get_context_data(self, **kwargs):
+    #     user = self.get_object()
+    #     context = super().get_context_data(**kwargs)
+    #     context['total_posts'] = Post.objects.filter(author=user).count()
+    #     context['total_followers'] = Follower.objects.filter(following=user).count()
+    #     if self.request.user.is_authenticated:
+    #         context['you_follow'] = Follower.objects.filter(following=user, followed_by=self.request.user).exists()
+    #     return context
