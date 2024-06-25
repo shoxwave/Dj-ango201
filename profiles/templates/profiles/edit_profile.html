@@ -8,7 +8,7 @@
     {% csrf_token %}
     <div class="p-2 md:p-4">
         <div class="w-full px-6 pb-8 mt-8 sm:max-w-xl sm:rounded-lg">
-            <h2 class="pl-6 text-2xl font-bold sm:text-xl">Public Profile</h2>
+            <h2 class="pl-6 text-2xl font-bold sm:text-xl">Edit Profile</h2>
 
             <div class="grid max-w-2xl mx-auto mt-8">
                 <div class="flex flex-col items-center space-y-5 sm:flex-row sm:space-y-0">
@@ -20,7 +20,7 @@
 
                     <div class="flex flex-col space-y-5 sm:ml-8">
                         <label for="profile-picture" class="py-3.5 px-7 text-base font-medium text-indigo-100 focus:outline-none bg-[#202142] rounded-lg border border-indigo-200 hover:bg-indigo-900 focus:z-10 focus:ring-4 focus:ring-indigo-200 cursor-pointer">
-                            Change picture
+                            Change picture <i class='bx bx-upload' ></i>
                         </label>
                         <input type="file" id="profile-picture" name="image" class="hidden">
                         
@@ -32,25 +32,38 @@
                     <div
                         class="flex flex-col items-center w-full mb-2 space-x-0 space-y-2 sm:flex-row sm:space-x-4 sm:space-y-0 sm:mb-6">
                         <div class="w-full">
-                            <label for="username"                               class="block mb-2 text-sm font-medium text-indigo-900 dark:text-white">Username</label>
-                            <input type="text" id="username" name="username"
-                                class="bg-indigo-50 border border-indigo-300 text-indigo-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5 "
-                                placeholder="username" value="{{ user.username }}" required>
+                            <label for="firstname"                               class="block mb-2 text-sm font-medium text-indigo-900 dark:text-white">First name</label>
+                            <input type="text" id="firstname" name="firstname"
+                                class="bg-white border border-indigo-300 text-indigo-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5 "
+                                placeholder="firstname" value="{{ user.firstname }}" required>
                         </div>
 
                     </div>
                 
-                    <div class="mb-6">
-                        <label for="message"
-                            class="block mb-2 text-sm font-medium text-indigo-900 dark:text-white">Bio</label>
-                        <textarea id="message" rows="4" name="bio"
-                            class="block p-2.5 w-full text-sm text-indigo-900 bg-indigo-50 rounded-lg border border-indigo-300 focus:ring-indigo-500 focus:border-indigo-500 "
-                            placeholder="Write your bio here...">{{ user.profile.bio }}</textarea>
+                    <div
+                        class="flex flex-col items-center w-full mb-2 space-x-0 space-y-2 sm:flex-row sm:space-x-4 sm:space-y-0 sm:mb-6">
+                        <div class="w-full">
+                            <label for="username"                               class="block mb-2 text-sm font-medium text-indigo-900 dark:text-white">Last name</label>
+                            <input type="text" id="lastname" name="lastname"
+                                class="bg-white border border-indigo-300 text-indigo-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5 "
+                                placeholder="lastname" value="{{ user.lastname }}" required>
+                        </div>
+
+                    </div>
+
+                    <div
+                        class="flex flex-col items-center w-full mb-2 space-x-0 space-y-2 sm:flex-row sm:space-x-4 sm:space-y-0 sm:mb-6">
+                        <div class="w-full">
+                            <label for="username"                               class="block mb-2 text-sm font-medium text-indigo-900 dark:text-white">Username</label>
+                            <input type="text" id="username" name="username"
+                                class="bg-white border border-indigo-300 text-indigo-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5 "
+                                placeholder="username" value="{{ user.username }}" required>
+                        </div>
+
                     </div>
 
                     <div class="flex justify-end">
-                        <button type="submit"
-                            class="text-white bg-indigo-700  hover:bg-indigo-800 focus:ring-4 focus:outline-none focus:ring-indigo-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800">Save</button>
+                        <button class="bg-white text-grey-800 font-bold rounded border-b-2 border-gray-500 hover:border-green-600 hover:bg-green-500 hover:text-black shadow-md py-1 px-3 text-xs inline-flex items-center">Save<i class='bx bx-save' ></i></button>
                     </div>
 
                 </div>
