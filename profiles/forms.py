@@ -4,7 +4,7 @@ from .models import Profile
 
 class EditProfileForm(forms.ModelForm):
     class Meta:
-        model = Profile  
+        model = Profile
         fields = ['user', 'image', 'firstname', 'lastname', 'username']
         
     def __init__(self, *args, **kwargs):

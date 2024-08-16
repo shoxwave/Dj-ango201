@@ -13,25 +13,14 @@ from followers.models import Follower
 from profiles.models import Profile
 from .forms import EditProfileForm
 
-def edit_profile(request):
-    user = request.user
-    profile = user.profile
-
-    if request.method == 'POST':
-        form = EditProfileForm(request.POST, request.FILES, instance=profile)
-        if form.is_valid():
-            form.save()
-            return redirect('profiles:edit')
-        else:
-            form = EditProfileForm(instance = profile)
-
-        context = {'form': form}
-        return render(request, 'profiles/edit_profile.html', context)
-
-class ProfileUpdateView(LoginRequiredMixin, View):
-    model = Profile
+class ProfileUpdateView(LoginRequiredMixin, UpdateView):
+    http_method_names = ["get"]
+    model = User
+    context_object_name = "user"
+    slug_field = "username"
+    slug_url_kwarg = "username"
     form_class = EditProfileForm
-    template_name = "profiles/edit_profile.html"
+    template_name = "profiles/editprofile.html"
     success_url = '/'
 
     def get_success_url(self):
@@ -41,6 +30,21 @@ class ProfileUpdateView(LoginRequiredMixin, View):
         form.save()
         messages.success(self.request, 'Profile has been updated!')
         return super().form_valid(form)
+    
+    def edit_profile(request):
+        user = request.user
+        profile = user.profile
+
+        if request.method == 'POST':
+            form = EditProfileForm(request.POST, request.FILES, instance=profile)
+            if form.is_valid():
+                form.save()
+                return redirect('profiles:edit')
+            else:
+                form = EditProfileForm(instance = profile)
+
+            context = {'form': form}
+            return render(request, 'profiles/edit_profile.html', context)
 
 class ProfileDetailView(DetailView):
     http_method_names = ["get"]
