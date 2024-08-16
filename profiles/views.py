@@ -13,38 +13,40 @@ from followers.models import Follower
 from profiles.models import Profile
 from .forms import EditProfileForm
 
-class ProfileUpdateView(LoginRequiredMixin, UpdateView):
-    http_method_names = ["get"]
-    model = User
-    context_object_name = "user"
-    slug_field = "username"
-    slug_url_kwarg = "username"
-    form_class = EditProfileForm
-    template_name = "profiles/editprofile.html"
-    success_url = '/'
+def edit_profile(request):
+    user = request.user
+    profile = user.profile  
 
+    if request.method == 'POST':
+        form = EditProfileForm(request.POST, request.FILES, instance=profile)
+        if form.is_valid():
+            form.save()
+            return redirect('profiles:edit_profile')
+    else:
+        form = EditProfileForm(instance=profile)
+
+    context = {'form': form}
+    return render(request, 'edit_profile.html', context)
+
+
+
+class ProfileUpdateView(LoginRequiredMixin, UpdateView):
+    model = Profile
+    form_class = EditProfileForm
+    template_name = 'profiles/edit_profile.html'
+    success_url = '/'
+    
     def get_success_url(self):
         return reverse('profiles:detail', kwargs={'username': self.request.user.username})
     
+    
+    def get_object(self, queryset=None):
+        return self.request.user.profile
+
     def form_valid(self, form):
         form.save()
-        messages.success(self.request, 'Profile has been updated!')
+        messages.success(self.request, 'Profile updated successfully.')
         return super().form_valid(form)
-    
-    def edit_profile(request):
-        user = request.user
-        profile = user.profile
-
-        if request.method == 'POST':
-            form = EditProfileForm(request.POST, request.FILES, instance=profile)
-            if form.is_valid():
-                form.save()
-                return redirect('profiles:edit')
-            else:
-                form = EditProfileForm(instance = profile)
-
-            context = {'form': form}
-            return render(request, 'profiles/edit_profile.html', context)
 
 class ProfileDetailView(DetailView):
     http_method_names = ["get"]
